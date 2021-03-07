@@ -1,0 +1,247 @@
+package project.java.lockedme;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+
+class Functions
+{	
+
+	Scanner sc=new Scanner(System.in);
+	
+	void menu()
+	{	
+					char select;
+					
+				
+						//******CODE FOR DISPLAYING PRODUCT NAME AND DEVELOPER INFO
+						System.out.println("\t\t\t-----------------------------------------");
+						System.out.println("\t\t\t**************LOCKEDME.COM***************");
+						System.out.println("\t\t\t***********Developed by ROHITH***********");
+						System.out.println("\t\t\t*****COMPANY LOCKERS PRIVATE LIMITED*****");
+						System.out.println("\t\t\t-----------------------------------------");
+				
+
+						//******CODE FOR OPTIONS FOR USER******
+						System.out.println("\n");
+						System.out.println("\t\t-------------------------------------------------------------");
+						System.out.println("\t\t\t                   MENU ");
+						System.out.println("\t\t-------------------------------------------------------------");
+						System.out.println("\t\t 1. DISPLAY CURRENT FILE NAMES");
+						System.out.println("\t\t 2. MODIFY THE FILE");
+						System.out.println("\t\t 3. EXIT");
+						System.out.println("\n\t\t select your option. \n\t\t (HINT: press 1,2 or 3 and press enter)");
+						
+						select = sc.next().charAt(0);//TAKING USER INPUT
+					
+					//CODE FOR PASSING TO CORRESPONDING FEATURES
+					if(Character.isDigit(select)) {
+						int b=Character.getNumericValue(select); 
+						switch(b)
+						{
+						case 1: disp();
+								break;
+						case 2: modify();
+								break;
+						case 3: exit();
+								break;
+						default:System.out.println("WRONG SELECTION");
+						}
+					}else {System.out.println("enter only integer values");}
+	}
+	void exit() //to exit the program
+	{	
+		System.out.println("EXITING...");
+		System.exit(1);
+	}
+	int search() // to search a file inside the directory
+	{
+		int flag=0;
+		System.out.println("\nenter file Name [with extension] (example abc.txt or xyz.pdf)");
+		String x=sc.next();
+		File dir = new File("C:\\Users\\User\\Desktop\\java-simplilearn\\project\\phase 1");
+	      String[] children = dir.list();
+	      
+	      if (children == null) {
+	         System.out.println("does not exist or is not a directory");
+	      } else {
+	         for (int i = 0; i < children.length; i++) {
+	            String filename = children[i];
+	            if((filename).equals(x)) {flag=1;}
+	         }
+	      }
+	      return flag;
+	}
+	void del() // delete user specified file if present
+	{
+		int flag=0;
+		System.out.println("\nenter file Name [with extension] (example abc.txt or xyz.pdf)");
+		String x=sc.next();
+		File dir = new File("C:\\Users\\User\\Desktop\\java-simplilearn\\project\\phase 1");
+	      String[] child = dir.list();
+	      
+	      if (child == null) {
+	         System.out.println("does not exist or is not a directory");
+	      } else {
+	         for (int i = 0; i < child.length; i++) {
+	            String filename = child[i];
+	            if((filename).equals(x)) 
+	            	{
+	            	flag=1;
+	    			File f =new File("C:\\Users\\User\\Desktop\\java-simplilearn\\project\\phase 1\\",filename);
+	    			if(f.delete()){
+	    				System.out.println("file deleted succesfully");
+	    			}
+	    			else
+	    			{
+	    				System.out.println("failed to delete");
+	    			}
+	    		}}
+	            if(flag==0)
+	            {
+	            	System.out.println("FILE DOES NOT EXIST");
+	            }
+	           
+	         
+	      }
+		
+		}
+    void add() // to add a user specific file to the directory (if file extention is not specified.. default to .txt)
+	    {		
+    			Pattern fileExtnPtrn = Pattern.compile("([^\\s]+(\\.(?i)(txt|doc|csv|pdf))$)");
+    			System.out.println("Enter the file name you want to add");
+    			String name;
+    			name=sc.next();
+    			Matcher mtch = fileExtnPtrn.matcher(name);
+    	        if(mtch.matches()){
+    	        	File file = new File("C:\\Users\\User\\Desktop\\java-simplilearn\\project\\phase 1",name);
+    		    	try {
+    					if (file.createNewFile())
+    					{
+    					    System.out.println("File is created!");
+    					} else {
+    					    System.out.println("File already exists.");
+    					}
+    				} catch (IOException e) {
+    					System.out.println("File could not be created.. try again");
+    					e.printStackTrace();
+    					add();
+    				}
+    	        }
+    	        else //default to txt if filetype is not specified
+    	        {
+    	        	name=name.concat(".txt");
+    	        	File file = new File("C:\\Users\\User\\Desktop\\java-simplilearn\\project\\phase 1",name);
+    		    	try {
+    					if (file.createNewFile())
+    					{
+    					    System.out.println("File is created!");
+    					} else {
+    					    System.out.println("File already exists.");
+    					}
+    				} catch (IOException e) {
+    					System.out.println("File could not be created.. try again");
+    					e.printStackTrace();
+    					add();
+    					}
+    	        }
+		      
+    }
+	void modify() // modification menu
+	{	int choice;
+		char select;
+		System.out.println("\n");
+		System.out.println("\t\t-------------------------------------------------------------");
+		System.out.println("\t\t\t           FILE MODIFY MENU ");
+		System.out.println("\t\t-------------------------------------------------------------");
+		System.out.println("\t\t 1. ADD A FILE ");
+		System.out.println("\t\t 2. DELETE A FILE");
+		System.out.println("\t\t 3. SEARCH A FILE");
+		System.out.println("\t\t 4. GO TO PREVIOUS MENU");
+		System.out.println("\n\t\t select your option. \n\t\t (HINT: press 1,2,3 or 4 and press enter)");
+		select = sc.next().charAt(0);//TAKING USER INPUT
+		if(Character.isDigit(select)) //to avoid other user inputs than integers
+		{
+		choice=Character.getNumericValue(select); 
+		switch(choice)
+		{
+		case 1:   	//to add a new file
+					System.out.println("\n");
+					System.out.println("\t\t-------------------------------------------------------------");
+					System.out.println("\t\t\t            ADD FILE");
+					System.out.println("\t\t-------------------------------------------------------------");
+					add();
+					modify();
+					break;
+					
+					
+		case 2:		 //to delete a file
+					System.out.println("\n");
+					System.out.println("\t\t-------------------------------------------------------------");
+					System.out.println("\t\t\t            DELETE FILE ");
+					System.out.println("\t\t-------------------------------------------------------------");
+					del();
+					modify();
+					break;
+					
+			
+		case 3: 	int flag;
+					System.out.println("\n");
+					System.out.println("\t\t-------------------------------------------------------------");
+					System.out.println("\t\t\t              SEARCH ");
+					System.out.println("\t\t-------------------------------------------------------------");
+					flag=search();
+					if(flag==1) {System.out.println("file exists");}
+					else{System.out.println("file not found");}
+					modify();
+					break;
+					
+					
+		case 4: 	menu();
+					break;
+		
+		default : 	System.out.println("INVALID INPUT.. choose your option [1,2 or 3]\n");
+		  			modify();
+		  			break;
+		  			
+		}
+		}else {System.out.println("enter only integer values");modify();}
+	}	
+	void disp() //to display the filenames inside the directory
+	{ 	System.out.println();
+		File dir = new File("C:\\Users\\User\\Desktop\\java-simplilearn\\project\\phase 1");
+	      String[] child= dir.list();
+	      
+	      if (child == null) {
+	         System.out.println("does not exist or is not a directory");
+	      } else {
+	    	  Arrays.sort(child);
+	         for (int i = 0; i < child.length; i++) {
+	            String filename = child[i];
+	            System.out.println(filename);
+	         }
+	      }
+	}
+	
+}
+
+
+
+public class Welcomepage {
+	
+	public static void main(String[] args) {
+		
+		
+		char choice='Y';
+		Functions obj=new Functions();
+
+		do
+		{
+		obj.menu();
+	}while(choice=='Y');
+}
+}
