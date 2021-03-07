@@ -22,7 +22,7 @@ class Functions
 						System.out.println("\t\t\t-----------------------------------------");
 						System.out.println("\t\t\t**************LOCKEDME.COM***************");
 						System.out.println("\t\t\t***********Developed by ROHITH***********");
-						System.out.println("\t\t\t*****COMPANY LOCKERS PRIVATE LIMITED*****");
+						System.out.println("\t\t\t*********LOCKERS PRIVATE LIMITED*********");
 						System.out.println("\t\t\t-----------------------------------------");
 				
 
